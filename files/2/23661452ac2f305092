@@ -1,0 +1,120 @@
+Source File Definitions
+Advantage Batching Controller
+Version 2.34.08 12-Oct-2004
+
+
+Basic Source Files
+
+ABC      BAS	Entry point for program.
+ABC_EXT  BAS	Helper program, main program "chains" to this one and then "shells" to execute DOS commands.
+ABCY2K   BAS	Helper program to clean up backup reminder message date in ABC.DAT file.
+ACU      BAS	Configuration utility. Enters/Edits data in ABC.CFG file.
+BACKUP   BAS	Contains menus and routines to handle backup/restore of system, chains to ABC_EXT to perform DOS commands.
+BATCHING BAS	Main routines for realtime batching logic.
+BCALC    BAS	Handles setup load menu and calculating batches.
+BCSUBS   BAS	Subroutines to assist BCALC module
+BDISP    BAS	Batching Display routines, handles status area and data area when displaying batching screen.
+BSUBS    BAS	Batching subroutines.  Helper routines for BATCHING module.
+BSUBS2   BAS	Batching subroutines 2.  Helper routines for BATCHING module.
+BSUBS3   BAS    Batching subroutines 3.  Helper routines for BATCHING module.
+CDIHOST  BAS	Routines to interface to CDI dispatch system.
+CDIHOSTR BAS    Routines to interface to CDI dispatch system. Realtime portion.
+CFGRPT   BAS	Routines to generate configuration report.
+CMSHOST  BAS    Routines to interface to CMS dispatch system.  This module not tested!!
+CONFIG   BAS	Backdoor routines to handle initialization of database files.
+CUST     BAS	Handles customer database, screens, and menus for ticketing systems.
+EODRPT   BAS	Handles report menu.
+GFXINT   BAS    Module to drive graphics interface via serial port.
+HC       BAS	Source code for help compiler.
+INIT     BAS	Handles initialization of batching system.
+INV      BAS	Handles inventory screens and functions.
+JCOMHOST BAS	Handles interface to JCOM hosts (ie Access system)
+JCOMMSTR BAS	Allows batching system to issue commands to slave batching system running JCOMHOST.
+JOB      BAS	Handles job menus, screens, and database for ticketing systems.
+JOBSUBS  BAS	Helper routines for JOB.BAS and TICKET.BAS.
+KILN     BAS    Handles configuration for kiln controls.
+KILNR    BAS 	Handles data gathering for kiln controls.  Realtime portion.
+MC       BAS	Message compiler source code.
+MIX      BAS	Handles menus, screens, and database for mix designs.
+MMM      BAS	Handles menus, screens, and database for multiple mix design manager.
+NETWORK  BAS	Handles menus and screens for generation of files for transfer via network (including "sneaker-net")
+NOGFXINT BAS	Stub file when no graphics communications module loaded.
+NOHOST   BAS	Stub file when no communications module loaded.
+NOJOB    BAS	Stub file when no ticketing modules loaded.
+NOKILN   BAS    Stub file when no kiln control module loaded. No longer needed.
+NONET    BAS	Stub file when no network module loaded.
+NOSCRBRD BAS	Stub file when no scoreboard module loaded.
+NOSHIFT  BAS	Stub file when no shift (block) modules loaded.
+ONERROR  BAS	Special module to handle error prone routines.
+PARAM    BAS	Handles menus and screens for main parameter menu.
+PARAM2   BAS	Handles menus and screens for next parameter menu.
+PIPHOST  BAS	Module with to interface to Besser's Plant Integration Package (PIP) using Allen-Bradley 1770-KF2 DH+ Interface Module.
+PLC_232  BAS	Handles communications between water controllers, translating PLC request to RS-232 and back.
+PRINTER  BAS	Handles print queues and interfacing.
+PROD     BAS	Handles menus, screens, and database for products in ticketing systems.
+QCSPOOL  BAS	Handles screen and menu for Quality Control Spool File.
+RCP      BAS    Module to interface to Remote Call Panels via MPLC.
+RSS      BAS    Module to interface to Remote Slump Stand Panels via MPLC. Not tested!!!
+SC       BAS	Source file for Screen Compiler
+SCALESIM BAS    Module with routines for simulateing behavior of truck scale.
+SCOREBRD BAS	Handles interface to scoreboard displays.
+SCRSAV   BAS	Screen Saver Module.
+SECURITY BAS	Handles passwords and security checking.
+SHFTSCAN BAS	Realtime part of shift (block) reporting.
+SHIFT    BAS	Non Realtime part of shift (block) reporting.
+SM       BAS	Screen manager - supports use of ABC style menus and screens in stand alone modules like ACU.
+SNXFER   BAS	Sneaker net transfer.  Handles generation of files for transfer via diskette.
+SULOAD   BAS	Routines to set up, start and calculate batches.
+TICKET   BAS	Handles ticket menus, screen, and database for ticketing systems.
+TKTHOST  BAS	Module with routines for interfacing with Generic Ticket Printers.
+TKTPRN   BAS	Handles formatting and printing of tickets for ticketing systems.
+TKTSTK   BAS	Module with routines for ticket/load stack maintenance (overlay portion).
+TKTSTKR  BAS	Module with routines for ticket/load stack maintenance (root portion).
+TKTXFR   BAS	Stand alone program to read ticket related databases and generate "billing report" for external accounting systems.
+TRUCK    BAS	Handles truck menus, screens, and database.
+USERIO   BAS	User Input/Output support routines.
+WINCOM   BAS	WinCom Protocol support routines.
+WOP      BAS	Wheel of Phrases module.
+XFERDATA BAS	Program to Transfer data from batching to external accounting system in CSV format.
+XFERMIX  BAS	Stand alone program to transfer mix design, truck, and MMM data from one version to another.  Must be modified for each translation.
+XFERSHFT BAS	Program to Transfer shift data from batching to external accounting system.
+XFERTKT  BAS	Stand alone program to transfer ticket, job, customer, product information from one version to another.  Must be modified for each translations.
+
+Assembly  Source Files
+
+ASMSUBS  ASM	Support routines for batching in assembly language.
+COMDRV   ASM	Serial port drivers for BASIC.
+PLC80    ASM	Special driver for PLC - Generates PLC80.DRV
+PLCIO    ASM	Interface routines to allow BASIC to communicate with PLC.
+SMSUBS   ASM	Screen Manager assembly routines.
+
+Include Files
+
+ASMSUBS  INC	Definitions for ASMSUBS module.
+BATCHING INC	Constants and Defintions for batching
+BBUF     INC	Constants and Definitions for batching buffers
+BCALC	 INC	Constants and Definitions for set up, start and calculate batches.
+BPP	 INC	Include file to control Basic Pre-Processor.
+BSUBS    INC	Constants and Definitions for BSUBS module
+BSUBS2   INC	Constants and Definitions for BSUBS2 module
+BSUBS3   INC	Constants and Definitions for BSUBS3 module
+CDIHOST  INC	Constants and Definitions for interfacing with Command Data Dispatch Computers.
+COMDRV   INC	Definitions for COMDRV module.
+CONST    INC	Main system constants file.
+INV	 INC	Include module describing data layout for incoming material data.
+JCOM     INC	Shared JCOM interface data.
+JOB      INC	Constants and Definitions for JOB, TICKET, PROD, CUSTOMER moduels.
+KILN     INC	Constants and Definitions for kiln controls.
+PLCIO    INC	Definitions for PLCIO module.
+PRINTER  INC	Constants and Definitions for PRINTER module.
+SECURITY INC	Constants and Definitions for SECURITY module.
+SHIFT    INC	Constants and Definitions for SHIFT modules.
+SM       INC	Constants and Definitions for Screen Manager.
+TABLE    INC	Constants and Definitions for ABC.CFG, ABC.DAT, and temporary data structures.
+TABLE2   INC	Constants and Definitions for ABC.CFG, ABC.DAT, and temporary data structures.
+TBLOFST  INC	File offsets for tables used in ABC
+TKTSTK   INC	Constants and Definitions for ticket/load stack maintenance.
+USERIO   INC	Constants and Definitions for USERIO module.
+XFERDATA INC	Constants and Definitions for transfering data from batching to external accounting system.
+
+
