@@ -63,7 +63,7 @@ function getCompanies(){
 }
 
 function getDepartments(){
-	$sql="select dept_id, dept_name from departments";
+	$sql="select dept_id, dept_name,dept_company from departments";
 	$result=db_loadlist($sql);
 	return $result;
 }
@@ -73,11 +73,11 @@ function getUsers(){
 	return $result;
 }
 ?>
-<h1 style='text-align:center;margin:10px 0;border:1px solid lightgrey;padding:10px;background:white'>Help Desk Report</h1>
+<h1 style='text-align:center;margin:10px 0;border:1px solid lightgrey;padding:10px;background:white'>Help Desk Report <a href='javascript:void(0)' onclick="printContent()" style="float:right"><img src="images/icons/stock_print-16.png" alt="Print"></a></h1>
 <form method="post" action="">
 <div class='filters'>
-<label>Company : </label>
-<select name='item_company_id'><option value="">-SELECT-</option>
+<label>Company: </label>
+<select name='item_company_id' onchange="showDepartments(this.value,'')"><option value="">-SELECT-</option>
 <?php
 $company_list=getCompanies();
 foreach ($company_list as $comp):
@@ -86,21 +86,21 @@ foreach ($company_list as $comp):
 endforeach;	
 ?>
 </select>
-<label>Create Date From : </label>
+<label>Create Date From: </label>
 <input name='date_from' type='text' value="<?php echo $_POST['date_from']; ?>" readonly='readonly'>
-<label>Create Date Till : </label>
+<label>Create Date Till: </label>
 <input name='date_till' type='text' value="<?php echo $_POST['date_till']; ?>" readonly='readonly'>
-<label>System # : </label>
-<select name='item_department_id'><option value="">-SELECT-</option>
+<label>System #: </label>
+<select name='item_department_id' id="item_department_id"><option value="">-SELECT-</option>
 <?php
 $dept_list=getDepartments();
 foreach ($dept_list as $dept):
 	$dept_sel=($dept['dept_id']==$_POST['item_department_id'])?"selected='selected'":"";
-	echo "<option value='{$dept['dept_id']}' $dept_sel>{$dept['dept_name']}</option>";
+	echo "<option value='{$dept['dept_id']}' $dept_sel id='company_{$dept['dept_company']}'>{$dept['dept_name']}</option>";
 endforeach;	
 ?>
 </select>
-<label>User : </label>
+<label>User: </label>
 <select name='item_created_by'><option value="">-SELECT-</option>
 <?php
 $user_list=getUsers();
@@ -110,16 +110,16 @@ foreach ($user_list as $user):
 endforeach;	
 ?>
 </select>
-<label>Application Type : </label>
+<label>Application Type: </label>
 <input name='item_application' type='text' value="<?php echo $_POST['item_application']; ?>">
 <input type='submit' name='generate_list' value="Submit">
 <input type='submit' name='export_list' value="Export">
 </form>
-<a href='?m=helpdesk&a=list&item_calltype=0&item_status=-1' style='text-decoration:none !important;bottom:12px;position:relative;float:right;margin:10px 1px;padding:5px 5px' class="button">Back</a>
-<a href='' style='text-decoration:none !important;bottom:12px;position:relative;float:right;margin:10px 1px;padding:5px 5px;' class='button'>Refresh</a>
+<a href='?m=helpdesk&a=list&item_calltype=0&item_status=-1' style='font-size:10px;text-decoration:none !important;bottom:12px;position:relative;float:right;margin:10px 1px;padding:3px 3px' class="button">Back</a>
+<a href='' style='font-size:10px;text-decoration:none !important;bottom:12px;position:relative;float:right;margin:10px 1px;padding:3px 3px;' class='button'>Refresh</a>
 </div>
 <!-- Now Create the Table. -->
-<table class='tbl mera-tbl' width="100%" cellpadding="5" cellspacing="1">
+<table class='tbl mera-tbl' width="100%" cellpadding="5" cellspacing="1" id="printableArea">
 <tr><th>Item Id</th><th>Item Created</th><th>Requested By</th><th>User</th><th>Application</th><th>Issue</th><th>Detail</th><th>System #</th><th>Status</th><th>Time</th></tr>
 <?php
 $i=0;
@@ -159,7 +159,9 @@ endforeach;
 if(!$i):
 $export_data.="\t"."Sorry, No Records Found !"."\n";	
 echo "<tr><td colspan='10' style='color:red'>Sorry, No Records Found !</td></td>";
+$total_task_log_hours+=$time;
 endif;
+echo "<tr><td colspan='8'></td><td ><b>TOTAL</b></td><td>".number_format($total_task_log_hours,2)."</td></tr>";
 ?>
 
 <?php
@@ -181,16 +183,23 @@ padding:10px;
 }
 
 .filters input[type='text'], .filters select{
-	width:90px;
+	width:80px;
 }
 .filters input[type='submit']{
-width:55px;
+width:45px;
 }
 
 
 .mera-tbl td{
 text-align: center;
 }
+
+select,input[type='text'],input[type='submit'],label{
+	font-size:10px;
+}
+
+
+
 
 </style>
 
@@ -203,3 +212,56 @@ text-align: center;
     $( "[name='date_from'],[name='date_till']").datepicker();
   });
   </script>
+
+
+
+<script>
+
+function printContent() {
+
+     document.title='Jonel- Help Desk Report';
+     window.print();
+
+}
+
+	function showDepartments(company_id,dept_val){
+
+        $('#item_department_id').val(dept_val);
+		$('#item_department_id option').each(function(){
+			$(this).hide();
+		});
+		$('#item_department_id #company_'+company_id).show();
+
+	}
+</script>
+
+<?php
+if($_POST['item_company_id']):
+echo "<script>showDepartments('{$_POST['item_company_id']}','{$_POST['item_department_id']}');</script>";
+endif;
+?>
+
+<style type="text/css">
+	@media print
+	{
+		body * { visibility: hidden; }
+		#printableArea * { visibility: visible; }
+		#printableArea { position: absolute; top: 0px; left: 0px; }
+		table td,table th{
+			border-bottom:1px solid grey;
+			border-left:1px solid grey;
+		}
+
+		th{
+			color:steelblue !important;
+			font-weight: bold;
+		}
+
+		table{
+			border-spacing: 0px;
+			border-collapse: collapse;
+		}
+
+
+	}
+</style>
