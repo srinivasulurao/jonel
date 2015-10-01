@@ -9,8 +9,7 @@ if (!defined('DP_BASE_DIR')) {
 global $AppUI;
 
 $company_id = intval(dPgetParam($_GET, 'company_id', 0));
-
-$sql="SELECT * FROM company_report_downloads WHERE company_id='$company_id'";
+$sql="SELECT * FROM company_report_downloads WHERE company_id='$company_id' AND pdf_type='batching'";
 $rows = db_loadList($sql, NULL);
 
 // format dates

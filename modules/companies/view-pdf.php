@@ -2,7 +2,7 @@
 $pdf=base64_decode($_REQUEST['pdf']);
 
 if(isset($_POST['save_pdf'])):
-$company_name=$_REQUEST['comp_name'];	
+$company_name=$_REQUEST['comp_name'];
 $pdfName=basename($pdf);
 insertDownloadingRecord($pdfName,$company_name);
 //save the pdf to destiny.
@@ -29,7 +29,8 @@ function insertDownloadingRecord($pdf_name,$company_name){
     $today=date("Y-m-d H:i:s",time());
     $pdf_link="/modules/companies/exported-pdf/$company_name/".$pdf_name;
     $user_id=$AppUI->user_id;
-    $sql="INSERT INTO company_report_downloads SET company_id='{$_REQUEST['company_id']}', pdf_link='$pdf_link', user_id='$user_id',downloaded_on='$today'";
+		$pdf_type=$_REQUEST['pdf_type'];
+    $sql="INSERT INTO company_report_downloads SET company_id='{$_REQUEST['company_id']}', pdf_link='$pdf_link', user_id='$user_id',downloaded_on='$today',pdf_type='$pdf_type'";
     $db->Execute($sql);
 }
 
@@ -41,7 +42,7 @@ function insertDownloadingRecord($pdf_name,$company_name){
 $(document).ready(function() {
 
     $(window).unload(function() {
-                
+
                 $.ajax({
 					  type: "POST",
 					  url:"<?php echo $baseUrl.'/index.php?m=companies&a=delete-pdf&pdf_name='.basename($pdf); ?>",

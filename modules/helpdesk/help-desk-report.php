@@ -35,15 +35,19 @@ $conditions_apply.=" AND hi.item_created_by ='{$_POST['item_created_by']}' ";
 if($_POST['item_application'])
 $conditions_apply.=" AND hi.item_application LIKE '%{$_POST['item_application']}%' ";
 
-
-$sql="SELECT * FROM helpdesk_items as hi LEFT JOIN departments as d ON hi.item_department_id=d.dept_id LEFT JOIN task_log tl ON hi.item_id=tl.task_log_help_desk_id $conditions_apply GROUP BY item_id ORDER BY hi.item_id";
-
-$result=db_loadlist($sql,NULL);
+$s=($_REQUEST['page'])?($_REQUEST['page']-1):0;
+$l=25;
+$s=$s*$l;
+$sql="SELECT * FROM helpdesk_items as hi LEFT JOIN departments as d ON hi.item_department_id=d.dept_id LEFT JOIN task_log tl ON hi.item_id=tl.task_log_help_desk_id $conditions_apply GROUP BY item_id ORDER BY hi.item_id ";
+$result=db_loadlist($sql."LIMIT $s,$l",NULL);
 //debug($result[0]);
 
 ?>
 
 <?php
+
+
+//debug($_REQUEST);
 function debug($arrayObj){
 	echo "<pre>";
 	print_r($arrayObj);
@@ -74,8 +78,61 @@ function getUsers(){
 }
 ?>
 <h1 style='text-align:center;margin:10px 0;border:1px solid lightgrey;padding:10px;background:white'>Help Desk Report <a href='javascript:void(0)' onclick="printContent()" style="float:right"><img src="images/icons/stock_print-16.png" alt="Print"></a></h1>
-<form method="post" action="">
-<div class='filters'>
+<?php
+
+if($_POST['print']=="print"):
+
+	$total_pages=ceil(sizeof(db_loadList($sql))/$l);
+	$pdfName="Help-Desk-Report.pdf";
+	$curl = curl_init();
+	$dataArray=array(
+		'total_pages'=>$total_pages,
+		'pdfName' => $pdfName,
+		'pdf_link'=>$baseUrl."/modules/helpdesk/images/".$pdfName,
+		'pdf_path'=>$baseDir."/modules/helpdesk/images/".$pdfName);
+	$pdfResult="";
+
+	for($u=1;$u<=$total_pages;$u++):
+		$dataArray['page'.$u]="<table style=\"width:100%;font-size:10px\" cellpadding=\"2\"><tr style=\"color:steelblue;border:1px\"><th>Item Id</th><th>Created</th><th>Req By</th><th>User</th><th>Application</th><th>Issue</th><th>Detail</th><th>System #</th><th>Status</th><th>Time</th></tr>";
+		$so=($u-1)*$l;
+		$pdfLister=db_loadList($sql."LIMIT $so,$l");
+		foreach($pdfLister as $pdfRow):
+			$item_id=$pdfRow['item_id'];
+			$item_created=date('m/d/Y',strtotime($pdfRow['item_created']));
+			$userDetail=getUser($pdfRow['item_created_by']);
+			$user=ucwords($userDetail['user_username']);
+			$requested_by=ucwords($pdfRow['item_requestor']);
+			$application=$pdfRow['item_application'];
+			$issue=$pdfRow['item_title'];
+			$detail=$pdfRow['item_summary'];
+			$system_explode=explode(" ",$pdfRow['dept_name']);
+			$system=$system_explode[1];
+			$status=($pdfRow['item_status']==2)?"Closed":"Open";
+			$time=number_format($pdfRow['task_log_hours'],2);
+			$dataArray['page'.$u].="<tr><td>$item_id</td><td>$item_created</td><td>$requested_by</td><td>$user</td><td>$application</td><td>$issue</td><td>$detail</td><td>$system</td><td>$status</td><td>$time</td></tr>";
+		endforeach;
+
+		$dataArray['page'.$u].="</table>";
+
+	endfor;
+
+	curl_setopt_array($curl, array(
+		CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_URL =>$baseUrl."/tcpdf/examples/helpdesk-report-generator.php",
+		CURLOPT_USERAGENT => 'Codular Sample cURL Request',
+		CURLOPT_POST => 1,
+		CURLOPT_POSTFIELDS => $dataArray));
+	$resp = curl_exec($curl);
+	echo $resp."<br>";
+	curl_close($curl);
+
+endif;
+
+?>
+<form method="post" action="" name="helpDeskRecords">
+<input type="hidden"	name="page" value="<?php echo ($_REQUEST['page'])?$_REQUEST['page']:1; ?>" id="page">
+<input type="hidden" name="print" value="0" id="print">
+	<div class='filters'>
 <label>Company: </label>
 <select name='item_company_id' onchange="showDepartments(this.value,'')"><option value="">-SELECT-</option>
 <?php
@@ -172,9 +229,25 @@ $fp=fopen($baseDir.$xls_file,"w");
 fwrite($fp,$export_data);
 header("Location:".$baseUrl."/".$xls_file);
 endif;
+
+
 ?>
 </table>
 
+<div style="text-align:center;margin-top:20px">
+Page :
+<select name="pagination" style="display:inline-block;width:50px;text-align:center" onchange="paginateShow(this.value)">
+<?php
+$total_pages=ceil(sizeof(db_loadList($sql))/$l);
+for ($i=1; $i<=$total_pages; $i++) {
+	$page_sel=($_REQUEST['page']==$i)?"selected='selected'":"";
+echo "<option style='text-align:center;display:inline-block' value='$i' $page_sel>$i</option>";
+//echo "<a href='?m=helpdesk&a=help-desk-report&page=".$i."'>".$i."</a> ";
+};
+//echo "<a href='?m=helpdesk&a=help-desk-report&page=$total_pages'>".'>|'."</a> "; // Goto last page
+?>
+</select>
+</div>
 <style>
 .filters{
 border:1px solid grey;
@@ -217,11 +290,17 @@ select,input[type='text'],input[type='submit'],label{
 
 <script>
 
-function printContent() {
+function printContentOld() {
 
      document.title='Jonel- Help Desk Report';
      window.print();
 
+}
+
+
+function printContent(){
+    document.getElementById('print').value="print";
+	document.helpDeskRecords.submit();
 }
 
 	function showDepartments(company_id,dept_val){
@@ -232,6 +311,11 @@ function printContent() {
 		});
 		$('#item_department_id #company_'+company_id).show();
 
+	}
+
+	function paginateShow(page){
+	 document.getElementById('page').value=page;
+     document.helpDeskRecords.submit();
 	}
 </script>
 

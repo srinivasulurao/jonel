@@ -176,7 +176,7 @@ EOD;
 
 if(!is_dir($baseDir."/modules/companies/exported-pdf/temp")):
         @mkdir($baseDir."/modules/companies/exported-pdf/temp");
-    endif; 
+    endif;
 
 $company_details=getCompany($_REQUEST['company_id']);
     //if(isset($_POST['print_maintenance_report']) && (strtotime($_POST['contract_begin_date_hidden']) < strtotime($company_details['application_date']))):
@@ -184,8 +184,8 @@ $company_details=getCompany($_REQUEST['company_id']);
     //Create the folder inside the url.
     if(!is_dir($baseDir."/modules/companies/exported-pdf/".$company_name)):
         @mkdir($baseDir."/modules/companies/exported-pdf/".$company_name);
-    endif; 
-        
+    endif;
+
     $html="";
     $html=$page1.$page2;
     $pdfName='Batch-Maintenance-Report-'.time().".pdf";
@@ -202,7 +202,7 @@ $company_details=getCompany($_REQUEST['company_id']);
             'page1' => $page1,
             'page2' => $page2,
             'pdfName' => $pdfName,
-            'pdf_link'=>$baseUrl."/index.php?m=companies&a=view-pdf&company_id=$company_id&comp_name=$company_name&pdf=".base64_encode($baseUrl."/modules/companies/exported-pdf/temp/".$pdfName),
+            'pdf_link'=>$baseUrl."/index.php?m=companies&a=view-pdf&company_id=$company_id&pdf_type=batching&comp_name=$company_name&pdf=".base64_encode($baseUrl."/modules/companies/exported-pdf/temp/".$pdfName),
             'pdf_path'=>$baseDir."/modules/companies/exported-pdf/temp/".$pdfName
         )
     ));

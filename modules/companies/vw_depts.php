@@ -87,8 +87,9 @@ foreach ($rows as $row) {
 echo ('<tr><td colspan="4" nowrap="nowrap" rowspan="99" align="right" valign="top"' 
       . ' style="background-color:#ffffff">');
 if ($canEdit) {
-        echo ('<input type="button" class="button" value="' . $AppUI->_('edit batching maintenance') . '" onclick="javascript:window.location=' . '\'./index.php?m=companies&amp;a=ae_batching_maintenance&amp;company_id=' . $company_id . '\';" />');
-	echo ('<input type="button" class="button" value="' . $AppUI->_('new department') . '" onclick="javascript:window.location=' . '\'./index.php?m=departments&amp;a=addedit&amp;company_id=' . $company_id . '\';" />');
+	echo ('<input type="button" class="button" value="' . $AppUI->_('Edit AU Maintenance') . '" onclick="javascript:window.location=' . '\'./index.php?m=companies&amp;a=edit_au_maintenance&amp;company_id=' . $company_id . '\';" />');
+	echo ('<input type="button" class="button" value="' . $AppUI->_('Edit Batching Maintenance') . '" onclick="javascript:window.location=' . '\'./index.php?m=companies&amp;a=ae_batching_maintenance&amp;company_id=' . $company_id . '\';" />');
+	echo ('<input type="button" class="button" value="' . $AppUI->_('New Department') . '" onclick="javascript:window.location=' . '\'./index.php?m=departments&amp;a=addedit&amp;company_id=' . $company_id . '\';" />');
 }
 echo '</td></tr></table>';
 ?>

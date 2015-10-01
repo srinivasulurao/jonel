@@ -54,17 +54,17 @@ $types = dPgetSysVal('CompanyType');
 $titleBlock = new CTitleBlock('View Company', 'handshake.png', $m, "$m.$a");
 if ($canEdit) {
 	$titleBlock->addCell();
-	$titleBlock->addCell(('<input type="submit" class="button" value="' . $AppUI->_('new company') 
-	                      . '" />'), '', '<form action="?m=companies&amp;a=addedit" method="post">', 
+	$titleBlock->addCell(('<input type="submit" class="button" value="' . $AppUI->_('new company')
+	                      . '" />'), '', '<form action="?m=companies&amp;a=addedit" method="post">',
 	                     '</form>');
-	$titleBlock->addCell(('<input type="submit" class="button" value="' . $AppUI->_('new project') 
-	                      . '" />'), '', 
-	                     ('<form action="?m=projects&amp;a=addedit&amp;company_id=' 
+	$titleBlock->addCell(('<input type="submit" class="button" value="' . $AppUI->_('new project')
+	                      . '" />'), '',
+	                     ('<form action="?m=projects&amp;a=addedit&amp;company_id='
 	                      . dPformSafe($company_id) . '" method="post">'), '</form>');
 }
 $titleBlock->addCrumb('?m=companies', 'company list');
 if ($canEdit) {
-	$titleBlock->addCrumb(('?m=companies&amp;a=addedit&amp;company_id=' . $company_id), 
+	$titleBlock->addCrumb(('?m=companies&amp;a=addedit&amp;company_id=' . $company_id),
 	                      'edit this company');
 	if ($canDelete) {
 		$titleBlock->addCrumbDelete('delete company', $canDelete, $msg);
@@ -117,13 +117,13 @@ function delIt() {
 		</tr>
 		<tr>
 			<td align="right" nowrap="nowrap"><?php echo $AppUI->_('Owner'); ?>:</td>
-			<td class="hilite" width="100%"><?php 
-echo (htmlspecialchars($obj->contact_first_name) . '&nbsp;' 
+			<td class="hilite" width="100%"><?php
+echo (htmlspecialchars($obj->contact_first_name) . '&nbsp;'
       . htmlspecialchars($obj->contact_last_name)); ?></td>
 		</tr>
 		<tr>
 			<td align="right" nowrap="nowrap"><?php echo $AppUI->_('Email'); ?>:</td>
-			<td class="hilite" width="100%"><?php 
+			<td class="hilite" width="100%"><?php
 echo htmlspecialchars($obj->company_email); ?></td>
 		</tr>
 		<tr>
@@ -142,23 +142,23 @@ echo htmlspecialchars($obj->company_email); ?></td>
 			<td align="right" nowrap="nowrap"><?php echo $AppUI->_('Address'); ?>:</td>
 			<td class="hilite">
 <?php if (!empty($obj->company_country)) { ?>
-				<span style="float: right"><a href="http://maps.google.com/maps?q=<?php 
-echo dPformSafe(@$obj->company_address1, DP_FORM_URI); ?>+<?php 
-echo dPformSafe(@$obj->company_address2, DP_FORM_URI); ?>+<?php 
-echo dPformSafe(@$obj->company_city, DP_FORM_URI); ?>+<?php 
-echo dPformSafe(@$obj->company_state, DP_FORM_URI); ?>+<?php 
-echo dPformSafe(@$obj->company_zip, DP_FORM_URI); ?>+<?php 
+				<span style="float: right"><a href="http://maps.google.com/maps?q=<?php
+echo dPformSafe(@$obj->company_address1, DP_FORM_URI); ?>+<?php
+echo dPformSafe(@$obj->company_address2, DP_FORM_URI); ?>+<?php
+echo dPformSafe(@$obj->company_city, DP_FORM_URI); ?>+<?php
+echo dPformSafe(@$obj->company_state, DP_FORM_URI); ?>+<?php
+echo dPformSafe(@$obj->company_zip, DP_FORM_URI); ?>+<?php
 echo dPformSafe(@$obj->company_country, DP_FORM_URI); ?>" target="_blank">
-				<?php 
+				<?php
 echo dPshowImage('./images/googlemaps.gif', 55, 22, 'Find It on Google');
 ?>
 <?php } ?>
 				</a></span>
 				<?php
-echo (htmlspecialchars(@$obj->company_address1) 
-      . (($obj->company_address2) ? '<br />' : '') . htmlspecialchars($obj->company_address2) 
-      . (($obj->company_city) ? '<br />' : '') . htmlspecialchars($obj->company_city) 
-      . (($obj->company_state) ? ', ' : '') . htmlspecialchars($obj->company_state) 
+echo (htmlspecialchars(@$obj->company_address1)
+      . (($obj->company_address2) ? '<br />' : '') . htmlspecialchars($obj->company_address2)
+      . (($obj->company_city) ? '<br />' : '') . htmlspecialchars($obj->company_city)
+      . (($obj->company_state) ? ', ' : '') . htmlspecialchars($obj->company_state)
       . (($obj->company_zip) ? ' ' : '') . htmlspecialchars($obj->company_zip));
 ?>
 			</td>
@@ -166,8 +166,8 @@ echo (htmlspecialchars(@$obj->company_address1)
 		<tr>
 			<td align="right" nowrap="nowrap"><?php echo $AppUI->_('URL'); ?>:</td>
 			<td class="hilite">
-				<a href="http://<?php 
-echo dPformSafe(@$obj->company_primary_url, DP_FORM_URI); ?>" target="Company"><?php 
+				<a href="http://<?php
+echo dPformSafe(@$obj->company_primary_url, DP_FORM_URI); ?>" target="Company"><?php
 echo htmlspecialchars(@$obj->company_primary_url); ?></a>
 			</td>
 		</tr>
@@ -183,20 +183,20 @@ echo htmlspecialchars(@$obj->company_primary_url); ?></a>
 		<table cellspacing="0" cellpadding="2" border="0" width="100%" summary="company description">
 		<tr>
 			<td class="hilite">
-				<?php 
+				<?php
 echo str_replace(chr(10), '<br />', htmlspecialchars($obj->company_description)); ?>&nbsp;
 			</td>
-		</tr>		
+		</tr>
 		</table>
-                <?php $vars = htmlspecialchars($obj->company_application); 
+                <?php $vars = htmlspecialchars($obj->company_application);
                 $resultarray = explode(',',$vars);
                 $count = count($resultarray);
                 if($resultarray[0] !=""){ ?>
                 <table>
                     <tr>
                         <td align="right" nowrap="nowrap"><?php echo $AppUI->_('Application Type'); ?>:</td>
-                        <td class="hilite" width="100%">                            
-                                   <?php 
+                        <td class="hilite" width="100%">
+                                   <?php
                                    $i=0;
                                     foreach ($resultarray as $ra){ ?>
                                     <?php if ($i++%3==0): ?>
@@ -216,24 +216,24 @@ echo str_replace(chr(10), '<br />', htmlspecialchars($obj->company_description))
                     <?php if (in_array("Access unlimited",$resultarray)){?>
                         <tr>
                             <td align="right" nowrap="nowrap"><?php echo $AppUI->_('AU Maintenance Expires'); ?>:</td>
-                            <td class="hilite"><?php echo htmlspecialchars($obj->application_date); ?></td>                            
+                            <td class="hilite"><?php echo htmlspecialchars($obj->application_date); ?></td>
                         </tr>
                         <tr>
                             <td align="right" nowrap="nowrap"><?php echo $AppUI->_('AU Maintenance Amount'); ?>:</td>
                             <td class="hilite"><?php echo htmlspecialchars($obj->application_amount); ?></td>
                         </tr>
                         <tr>
-                            <?php 
+                            <?php
                                 $data1 = mysql_query("SELECT sysval_value FROM sysvals WHERE sysval_title='AUMaintenancePeriod'")
-                                or die(mysql_error()); 
-                                while($info1 = mysql_fetch_array($data1)) 
-                                { 
+                                or die(mysql_error());
+                                while($info1 = mysql_fetch_array($data1))
+                                {
                                    $result1=$info1['sysval_value'];
                                 }
                                 $new=explode(",",$result1);
                                 $target=htmlspecialchars($obj->application_period);
                                 foreach($new as $n){
-                                    $as = explode('|',$n); 
+                                    $as = explode('|',$n);
                                     if($as[0]===$target){
                                         $found=$as[1];
                                     }
@@ -251,7 +251,7 @@ echo str_replace(chr(10), '<br />', htmlspecialchars($obj->company_description))
 			$custom_fields = New CustomFields($m, $a, $obj->company_id, 'view');
 			$custom_fields->printHTML();
 		?>
-	</td>        
+	</td>
 </tr>
 </table>
 
@@ -265,6 +265,7 @@ $tabBox->add($moddir . 'vw_depts', 'Departments');
 $tabBox->add($moddir . 'vw_users', 'Users');
 $tabBox->add($moddir . 'vw_contacts', 'Contacts');
 $tabBox->add($moddir . 'view-report-generation-history', 'Maintenance Reports');
+$tabBox->add($moddir . 'view-au-report-generation-history', 'AU Reports');
 $tabBox->loadExtras($m);
 $tabBox->loadExtras($m, 'view');
 $tabBox->show();
