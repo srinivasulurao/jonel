@@ -70,7 +70,7 @@ if($_POST['save_au']=="GENERATE REPORT"):
 
     $page1= <<<EOD
         <div style="font-family:arial !important;width:800px;margin:auto;background:white;padding:30px">
-        <table border="0" style="font-family:arial;width:124%;font-size:15px">
+        <table border="0" style="font-family:arial;width:120%;font-size:15px">
         <tr><td width="30%" ><img width="220" src="$root_url/modules/companies/images/jonel_logo_2.jpg"><br><br><span style="font-size:14px">Jonel Engineering<br>500E.Walnut Avenue<br>P.O.Box 798<br>Fullerton, CA 92832</span></td>
         <td width='60%'></td>
         <td width="30%" style="font-size:12px;align:right">
@@ -97,15 +97,15 @@ if($_POST['save_au']=="GENERATE REPORT"):
 
         <table style="font-family:arial;width:100%;font-size:15px">
         <tr><td style="font-size:20px;font-weight:bold">On-Site Training and Implementation</td></tr>
-        <tr><td>Any requirements for Jonel Staff to perform On-site implementation and training will be billed at a daily rate of $1000 per day per person plus any overtime.On site implementation and training include the following.<br>
+        <tr><td>Any requirements for Jonel Staff to perform On-site implementation and training will be billed at a daily rate of $1000 per day per person plus any overtime. On site implementation and training include the following.<br>
         <ul>
         <li>Setup and configuration of Access Unlimited SQL databases.</li>
         <li>File building set up - taxes, products, customers, etc.</li>
         <li>Setup of batch panel interface.</li>
-        <li>On site DBA - replication , backup and maintenance plans.</li>
+        <li>On site DBA - replication, backup and maintenance plans.</li>
         <li>Mobile Signaling setup/configuration.</li>
         <li>Core application training: Sales, Dispatch, Billing, etc.</li>
-        <li>On site I/T training-network, O/S setup, MSMQ, report writting</li>
+        <li>On site I/T training-network, O/S setup, MSMQ, report writing</li>
         </ul>
         </td></tr>
         <br><br>
@@ -133,7 +133,7 @@ EOD;
             <tr><td style="font-size:20px;font-weight:bold">Off-site DBA/Network/Hardware Troubleshooting</td></tr>
             <tr><td>Off-site database administration is billable at a rate of $180 per hour. Example of this type of services are as follows:
             <ul>
-            <li>Setting up backups and scheduled mainenance plans specific to SQL Server</li>
+            <li>Setting up backups and scheduled maintenance plans specific to SQL Server</li>
             <li>Adding new databases or moving data between databases using replication or data transformation tools</li>
             <li>Fixing database corruption at table or index level</li>
             <li>Restoring database from backup</li>
@@ -147,7 +147,7 @@ EOD;
             <ul>
             <li>Setting up configuring NT/200 network components (DNS, DHCP, WINS, TCP/IP, etc.)</li>
             <li>Setting up RAID Server arrays</li>
-            <li>Installing or reinistalling operating system on server(s)</li>
+            <li>Installing or reinstalling operating system on server(s)</li>
             <li>OS upgrades</li>
             <li>Third party application configuration and setup such as Citrix Metaframe</li>
             <li>Trouble shooting client computer issues such as network configuration or hardware issues specific to client machines (NIC cards, video cards, hard drives, peripherals, etc.)</li>
@@ -165,9 +165,9 @@ EOD;
             <br><br>
 
             <table style="font-family:arial;width:100%;font-size:15px">
-            <tr><td style="font-size:20px;font-weight:bold">Negligent Use.</td></tr>
+            <tr><td style="font-size:20px;font-weight:bold">Negligent Use</td></tr>
             <tr><td>Any blatant misuse of the product in a consistent, negligent fashion is billable. This type of issue may arise when user
-            request service on issues that they have direct control of avoiding, but continously cause due to lack of training of forgetfulness. These types of billable items guard against users who <i>consistenly</i>
+            request service on issues that they have direct control of avoiding, but continuously cause due to lack of training of forgetfulness. These types of billable items guard against users who <i>consistently</i>
             fail to follow directions or use of the product in a way that it was not intended. Examples of this are as follows:
             <ul>
             <li>Unscrupulously disabling core services such as SQL server, TCP/IP, Message Queue, etc.</li>
@@ -191,16 +191,16 @@ xyz;
             <tr><td style="font-size:20px;font-weight:bold">Included in the service contract:</td></tr>
             <tr><td>The following items are covered in your service contact.
             <ul>
-            <li>Off-site training on Access Unlimited core applications on an individual basis. (This does not include off-site "classroom traning").</li>
+            <li>Off-site training on Access Unlimited core applications on an individual basis. (This does not include off-site "classroom training").</li>
             <li>General questions on setup, configuration and use of Access Unlimited core application.</li>
-            <li>Training on configuring AUJS core componenents: Reports, Batch Panel Interface and Mobile Signaling Interface.</li>
+            <li>Training on configuring AUJS core components: Reports, Batch Panel Interface and Mobile Signaling Interface.</li>
             <li>Training on formatting documents: tickets, invoices and form letters.</li>
             <li>General questions on database table structure and table relationship for custom reports and queries.</li>
             <li>Bug Fixes.</li>
             <li>General trouble shootings of issues dealing explicitly and Access Unlimited JS system and core components (Batch Panel, Reports and Mobile Signaling). </li>
             <li>Access Unlimited upgrades during business hours 8:00AM-5:00PM Monday-Friday PST.</li>
             </ul>
-            All Customers decling maintenance will be charged at a rate of $240 per hour, in half-hour
+            All Customers declining maintenance will be charged at a rate of $240 per hour, in half-hour
             increments for phone service. A purchase order number will be required before services are provided.
             </td></tr>
             </table>
@@ -226,14 +226,15 @@ EOD;
         <br><br>
         <table  style="font-family:arial;width:100%;font-size:15px">
         <tr><td>Software Service Agreement will commence {$contract_begin_date} and continues through {$contract_end_date}. The Software Service Agreement must be Signed and returned to Jonel along with payment.</td></tr>
-        <tr><td>Invoice terms: Due upon receipt. Payments may be made quaterly or annually. If quaterly payments are selected, payment must be made on or before their due date. Should payments laps for month than one-month (30) days, this contract will be invalid.</td></tr>
+        <tr><td></td></tr>
+        <tr><td>Invoice terms: Due upon receipt. Payments may be made quarterly or annually. If quarterly payments are selected, payment must be made on or before their due date. Should payments laps for more than one-month (30) days, this contract will be invalid.</td></tr>
         </table>
 
         <br><br><br><br>
 
         <table  style="font-family:arial;width:100%;font-size:15px;color:steelblue;line-height:25px;">
-        <tr><td style="width:70%"></td><td><b>ANNUALLY</b>: $annually</td></tr>
-        <tr><td style="width:70%"></td><td><b>QUATERLY</b>: $quaterly</td></tr>
+        <tr><td style="width:70%"></td><td style="width:17%"><b>ANNUALLY</b>: </td><td>$annually</td></tr>
+        <tr><td style="width:70%"></td><td style="width:17%"><b>QUARTERLY</b>: </td><td>$quaterly</td></tr>
         <tr><td></td></tr>
         </table>
 
@@ -246,7 +247,7 @@ EOD;
         </table>
 
 EOD;
-    $pdfName='Batch-Maintenance-Report-'.time().".pdf";
+    $pdfName='AU-Maintenance-Report-'.time().".pdf";
 
     $curl = curl_init();
 // Set some options - we are passing in a useragent too here

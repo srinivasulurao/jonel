@@ -1,14 +1,14 @@
 <?php
 $client_sql="select hi.item_id 'Item Id', DATE_FORMAT(hi.item_created, '%m-%d-%Y')  'Item Created', hi.item_requestor 'Requested By',
 u.user_username 'User', hi.item_title 'Issue', hi.item_summary 'Detail', d.dept_name 'System #',
-(case 
+(case
 	when hi.item_status = 2 then 'Closed'
 else
 	'Open'
 end) as Status,
 format(sum(ifnull(tl.task_log_hours, 0)), 2) 'Hours', hi.item_application 'Application' FROM  helpdesk_items hi
-left outer join  departments d on hi.item_department_id = d.dept_id Join helpdesk_item_status his join users u 
-join task_log tl  
+left outer join  departments d on hi.item_department_id = d.dept_id Join helpdesk_item_status his join users u
+join task_log tl
 where  his.status_id = hi.item_status and hi.item_created_by = u.user_id and hi.item_id = tl.task_log_help_desk_id and hi.item_created between  'date filter begin Date' and 'Date filter end Date'
 group by  Hi.Item_id ";
 
@@ -93,7 +93,8 @@ if($_POST['print']=="print"):
 	$pdfResult="";
 
 	for($u=1;$u<=$total_pages;$u++):
-		$dataArray['page'.$u]="<table style=\"width:100%;font-size:10px\" cellpadding=\"2\"><tr style=\"color:steelblue;border:1px\"><th>Item Id</th><th>Created</th><th>Req By</th><th>User</th><th>Application</th><th>Issue</th><th>Detail</th><th>System #</th><th>Status</th><th>Time</th></tr>";
+		$dataArray['page'.$u]="<h1 style=\"text-align:center\">HELP DESK REPORT</h1>";
+		$dataArray['page'.$u].="<table style=\"width:100%;font-size:10px;text-align:center\" border=\"1\" cellpadding=\"2\"><tr style=\"color:steelblue;border:1px;font-weight:bold\"><th>ITEM ID</th><th>CREATED</th><th>REQ BY</th><th>USER</th><th width=\"12%\">APPLICATION</th><th>ISSUE</th><th>DETAIL</th><th>SYSTEM #</th><th>STATUS</th><th>TIME</th></tr>";
 		$so=($u-1)*$l;
 		$pdfLister=db_loadList($sql."LIMIT $so,$l");
 		foreach($pdfLister as $pdfRow):
@@ -109,9 +110,11 @@ if($_POST['print']=="print"):
 			$system=$system_explode[1];
 			$status=($pdfRow['item_status']==2)?"Closed":"Open";
 			$time=number_format($pdfRow['task_log_hours'],2);
+			$total_log_time+=$time;
 			$dataArray['page'.$u].="<tr><td>$item_id</td><td>$item_created</td><td>$requested_by</td><td>$user</td><td>$application</td><td>$issue</td><td>$detail</td><td>$system</td><td>$status</td><td>$time</td></tr>";
 		endforeach;
-
+		$total_log_time=number_format($total_log_time,2);
+    $dataArray['page'.$u].="<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>TOTAL</b></td><td>$total_log_time</td></tr>";
 		$dataArray['page'.$u].="</table>";
 
 	endfor;
@@ -140,7 +143,7 @@ $company_list=getCompanies();
 foreach ($company_list as $comp):
 	$comp_sel=($comp['company_id']==$_POST['item_company_id'])?"selected='selected'":"";
 	echo "<option value='{$comp['company_id']}' $comp_sel>{$comp['company_name']}</option>";
-endforeach;	
+endforeach;
 ?>
 </select>
 <label>Create Date From: </label>
@@ -154,7 +157,7 @@ $dept_list=getDepartments();
 foreach ($dept_list as $dept):
 	$dept_sel=($dept['dept_id']==$_POST['item_department_id'])?"selected='selected'":"";
 	echo "<option value='{$dept['dept_id']}' $dept_sel id='company_{$dept['dept_company']}'>{$dept['dept_name']}</option>";
-endforeach;	
+endforeach;
 ?>
 </select>
 <label>User: </label>
@@ -164,7 +167,7 @@ $user_list=getUsers();
 foreach ($user_list as $user):
 	$user_sel=($user['user_id']==$_POST['item_created_by'])?"selected='selected'":"";
 	echo "<option value='{$user['user_id']}' $user_sel>{$user['user_username']}</option>";
-endforeach;	
+endforeach;
 ?>
 </select>
 <label>Application Type: </label>
@@ -197,7 +200,6 @@ $system=$system_explode[1];
 $status=($key['item_status']==2)?"Closed":"Open";
 $time=number_format($key['task_log_hours'],2);
 
-
 $export_data.=implode("\t",array($item_id,$item_created,$requested_by,$user,$application,$issue,$detail,$system,$status,$time))."\n";
 
 echo "<td>$item_id.</td>";
@@ -212,11 +214,11 @@ echo "<td>$status</td>";
 echo "<td>$time</td>";
     echo "</tr>";
     $i++;
+		$total_task_log_hours+=$time;
 endforeach;
 if(!$i):
-$export_data.="\t"."Sorry, No Records Found !"."\n";	
+$export_data.="\t"."Sorry, No Records Found !"."\n";
 echo "<tr><td colspan='10' style='color:red'>Sorry, No Records Found !</td></td>";
-$total_task_log_hours+=$time;
 endif;
 echo "<tr><td colspan='8'></td><td ><b>TOTAL</b></td><td>".number_format($total_task_log_hours,2)."</td></tr>";
 ?>
