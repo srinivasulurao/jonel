@@ -28,11 +28,14 @@ $company_id = intval(dPgetParam($_GET, 'company_id', 0));
 
 if($_POST['save_au']=="SAVE"):
     $application_date=($_POST['accepted_date'])?date("m/d/Y",(strtotime($_POST['accepted_date'])-(3600*24*365))):$_POST['expiration_date'];
-    $report_accept_date=date("Y-m-d H:i:s",strtotime($_POST['accepted_date']));
+    $report_accept_date=($_POST['accepted_date'])?date("Y-m-d H:i:s",strtotime($_POST['accepted_date'])):"0000-00-00 00:00:00";
 
     global $db;
+
+    //debug($_REQUEST);
+
     $sql="UPDATE companies SET application_date='$application_date', report_accept_date='$report_accept_date' WHERE company_id='$company_id'";
-    $db->Execute($sql);
+    //$db->Execute($sql);
     echo"<div style='margin:5px;background:lightgreen;padding:5px;border:1px solid green;border-radius:4px;'>&#x2714; Company details saved successfully !</div>";
 endif;
 
@@ -276,16 +279,17 @@ EOD;
 
 
 endif;
-
 ?>
 <form method="post" action="">
-<table width="75%" class="tbl auComp" cellpadding="10">
+<table width="75%" class="tbl auComp" cellpadding="5">
     <tr><th>Contract Begin Date</th><th>Expires</th><th>Report Generation Date</th><th>Accepted Date</th></tr>
-    <tr><td><input class='text' readonly type="text" name="contract_begin_date" value="<?php echo date("m/d/Y",time()); ?>"></td>
-        <td><input class='text' readonly type="text" name="expiration_date" value="<?php echo  $result['application_date']; ?>"></td>
-        <td><?php echo ($result['report_generation_date']!="0000-00-00 00:00:00")?date("m/d/Y",strtotime($result['report_generation_date'])):"Not generated yet"; ?></td>
-        <td><input class='text' readonly type="text" name="accepted_date" value="<?php echo ($result['report_accept_date']!="0000-00-00 00:00:00")?date("m/d/Y",strtotime($result['report_accept_date'])):""; ?>"></td>
-
+    <tr><td><input class='text' readonly type="text" id='contract_begin_date' name="contract_begin_date" value="<?php echo date("d/M/Y",time()); ?>"><a href="javascript:void(0)" onclick="showDPCalender('contract_begin_date')"> <img src="./images/calendar.gif" name="img_expiredate2" width="24" height="12" alt="Calendar" border="0"></a></td>
+        <td><input class='text' readonly type="text" id='expiration_date' name="expiration_date" value="<?php echo date("d/M/Y",strtotime($result['application_date'])); ?>"><a href="javascript:void(0)" onclick="showDPCalender('expiration_date')"> <img src="./images/calendar.gif" name="img_expiredate2" width="24" height="12" alt="Calendar" border="0"></a></td>
+        <td><?php echo ($result['report_generation_date']!="0000-00-00 00:00:00")?date("d/M/Y",strtotime($result['report_generation_date'])):"Not generated yet"; ?></td>
+        <td><input class='text' readonly type="text" id="accepted_date" name="accepted_date" value="<?php echo ($result['report_accept_date']!="0000-00-00 00:00:00")?date("d/M/Y",strtotime($result['report_accept_date'])):""; ?>"><a href="javascript:void(0)" onclick="showDPCalender('accepted_date')"> <img src="./images/calendar.gif" name="img_expiredate2" width="24" height="12" alt="Calendar" border="0"></a></td>
+      <input name='accepted_date_hidden' type='hidden' id='accepted_date_hidden' value="<?php echo ($result['report_accept_date']!="0000-00-00 00:00:00")?date("Ymd",strtotime($result['report_accept_date'])):date("Ymd",time()); ?>" >
+      <input name='expiration_date_hidden' type='hidden' id='expiration_date_hidden' value="<?php echo date("Ymd",strtotime($result['application_date'])); ?>" >
+      <input name='accepted_date_hidden' type='hidden' id='contract_begin_date_hidden' value="<?php echo date("Ymd",time()); ?>" >
     </tr>
     <tr><td colspan="4" style="text-align:center;"><input class="button" type="submit" name="save_au" value="SAVE">&nbsp;<input type="submit" name="save_au" value="GENERATE REPORT" class="button"></td></tr>
 </table>
@@ -309,7 +313,24 @@ endif;
 
 </style>
 
+<script>
+function showDPCalender(givenId){
+  calendarField = document.getElementById(givenId);
+  fld_date = document.getElementById(givenId+"_hidden");
+  idate = fld_date.value;
+  window.open('?m=public&'+'a=calendar&'+'dialog=1&'+'callback=setCalendar&'+'date=' + idate, 'calwin', 'top=250,left=250,width=278, height=272, scrollbars=no, status=no');
 
+}
+
+function setCalendar(idate, fdate) {
+  console.log(idate,fdate);
+	calendarField.value = fdate;
+	fld_date.value = idate;
+}
+
+</script>
+
+<!--
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -319,3 +340,4 @@ endif;
         $( "[name='contract_begin_date'],[name='expiration_date'],[name='accepted_date']").datepicker();
     });
 </script>
+-->

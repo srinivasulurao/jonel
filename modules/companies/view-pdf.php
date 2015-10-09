@@ -32,6 +32,12 @@ function insertDownloadingRecord($pdf_name,$company_name){
 		$pdf_type=$_REQUEST['pdf_type'];
     $sql="INSERT INTO company_report_downloads SET company_id='{$_REQUEST['company_id']}', pdf_link='$pdf_link', user_id='$user_id',downloaded_on='$today',pdf_type='$pdf_type'";
     $db->Execute($sql);
+
+    //Store the last accept date for the company.
+		if($pdf_type=='au'){
+		$sql="UPDATE companies SET report_generation_date='{$today}' WHERE company_id='{$_REQUEST['company_id']}'";
+	  $db->Execute($sql);
+		}
 }
 
 ?>
