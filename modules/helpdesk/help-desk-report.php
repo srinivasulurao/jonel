@@ -1,4 +1,5 @@
 <?php
+ini_set('max_execution_time',1000);
 $client_sql="select hi.item_id 'Item Id', DATE_FORMAT(hi.item_created, '%m-%d-%Y')  'Item Created', hi.item_requestor 'Requested By',
 u.user_username 'User', hi.item_title 'Issue', hi.item_summary 'Detail', d.dept_name 'System #',
 (case
@@ -38,9 +39,9 @@ $conditions_apply.=" AND hi.item_application LIKE '%{$_POST['item_application']}
 $s=($_REQUEST['page'])?($_REQUEST['page']-1):0;
 $l=25;
 $s=$s*$l;
-$sql="SELECT * FROM helpdesk_items as hi LEFT JOIN departments as d ON hi.item_department_id=d.dept_id LEFT JOIN task_log tl ON hi.item_id=tl.task_log_help_desk_id $conditions_apply GROUP BY item_id ORDER BY hi.item_id ";
+$sql="SELECT * FROM helpdesk_items as hi LEFT JOIN departments as d ON hi.item_department_id=d.dept_id INNER JOIN task_log tl ON hi.item_id=tl.task_log_help_desk_id $conditions_apply GROUP BY item_id ORDER BY hi.item_id ";
+//$sql="SELECT * FROM helpdesk_items";
 $result=db_loadlist($sql."LIMIT $s,$l",NULL);
-//debug($result[0]);
 
 ?>
 
