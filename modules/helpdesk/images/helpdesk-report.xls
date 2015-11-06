@@ -1,11 +1,40 @@
 Item Id	Item Created	Requested By	User	Application	Issue	Detail	System #	Status	Time
-9	05/10/2013	Asdf	Admin	eABC	Mike  Test 2	test	Valvista	Open	0.00
-10	05/10/2013	Mike	Admin	Archer	Tes compt	test		Open	0.00
-13	05/10/2013	Get	Admin	Archer	get	get	Valvista	Open	0.00
-14	05/10/2013	Test	Admin	eABC	test 5	test		Open	0.00
-15	05/10/2013	43343	Admin	Not Applicable	4545	tsetts	Valvista	Open	0.00
-16	05/10/2013	4545	Admin	Not Applicable	454588	4545435		Open	0.00
-17	05/10/2013	44	Admin	eABC	test44	ddd		Open	0.00
-20	05/10/2013	Sadfasdf	Admin	Not Applicable	erwer	adsf		Open	0.00
-23	05/10/2013	Chris	Admin	Archer	test	test summary		Open	0.00
-24	06/12/2013	Tes	Admin	Access unlimited	test	tewst		Open	0.00
+8	05/25/2005	Tim Bubier	Temp	eABC	HR Irvine Hard Drive	hard drive failure
+		Closed	1.00
+48	05/27/2005	Mike Lawson	Temp	AUJS	Holliday -Asphalt Ticketing (RPTW)	Requested change to ticket Asphalt tickets through RPTW instead of RPS. 		Closed	1.53
+85	06/07/2005	Tim Bubier	Temp	eABC	HR Irwindale Oil	on 3rd batch of 4, oil dumped while agg was at overweight
+		Closed	0.45
+98	06/08/2005	Scott Franze	Temp	AUJS	Holliday Rock - Word Mail Merge Ticket Format	Tim Bubier requested adding 2 more drops to the asphalt ticket format created in Microsoft Word.		Closed	1.50
+112	06/10/2005	Scott Franze	Temp	AUJS	Holliday Rock - Unable To Print Asphalt Tickets	Tim Bubier is not able to print tickets at the asphalt plant.
+
+Determined that an error on the RPS print server was preventing tickets from printing.		Closed	0.50
+126	06/14/2005	Scott Franze	Temp	AUJS	Holliday Rock - Questions Regarding AUJS.INI Settings	Tim Bubier had questions related to the AUJS.INI settings and correct syntax.		Closed	0.25
+175	06/23/2005	Scott Franze	Temp	AUJS	Holliday Rock - Concrete Ticket Only Shows 8 Raw Materials	Tim Bubier indicated that only 8 raw materials printed on a ticket for a mix design that had 10 materials.		Closed	0.27
+378	08/09/2005	Brian	Temp	eABC	Holliday Rock Colton Double Batch	Double batching Agg, but not cement.  Cement will wait until second batch of Agg before dumping.
+		Closed	1.00
+707	11/16/2005	Tim Bubier	Temp	AUJS	Holliday Rock - AUJS Upgade	AUJS upgrade.		Closed	5.00
+789	01/19/2006	Tim Bubier	Temp	eABC	Holliday Rock Foothill Asphalt - Timers	Dry mix/wet mix/mixer dump timers running when they should not be.  Claims it only happens when things slow down.  When they have cold oil and the agg has already weighed.
+		Closed	2.00
+812	01/30/2006	Erik Hannah	Temp	AUJS	Holiday Rock - Cannot Save Order	Received a call from Ben?? at Holiday.  Called J.D. to set up the modem.  Got disconected, called him back a couple times, but he did not call back.  Left message, waiting for call back.		Closed	0.50
+918	03/30/2006	Scott Franze	Temp	AUJS	Holliday Rock - Some orders not saving	Some Orders not saving. See aujs.log file.		Closed	1.68
+984	05/30/2006	Tim Bubier	Temp	eABC	Holliday Rock - Foothill Asphalt Timers	Timers will go haywire sometimes.  Usually happens when waiting on material.		Closed	0.00
+1172	09/06/2006	Tim Bubier	Temp	AUJS	Holliday Rock - Client Access License	Users complain of inability to login. AUJS.log file records almost double the amount of available users currently connected.		Closed	0.55
+1355	10/04/2006	John Williams	Temp	AUJS	Holliday Rock - Preliminary Notice Require Report	Questions regarding the query for the Preliminary Notice Require Report.		Closed	0.45
+1374	10/06/2006	Tim Holliday	Temp	AUJS	Holliday Rock - Saving Aggregate Order	User indicates that he is not able to save aggregate order #25.		Closed	0.77
+1385	10/10/2006	Tim		Not Applicable	Holliday Rock, Foothill plant	Their manual panel died.  They checked the fuses, but it still doesn't work.  They can still batch with their virtual panel.
+
+Tim said that they would bring in their manual panel either today or tomorrow morning.
+
+Damon - 06/18/08 - Issue purged for inactivity		Closed	0.00
+1481	10/30/2006	John Williams	Temp	AUJS	Holliday Rock - Summary List Of Customers Report	Requested information on how to link a customer to a salesperson the Employee table.		Closed	0.20
+1522	11/09/2006	John Williams	Temp	AUJS	Holliday Rock - Ticket Number Bar Codes	Request to implement ticket number bar codes for scanning purposes.		Closed	0.00
+1531	11/13/2006	Tim Bubier	Temp	eABC	Holliday Rock - Foothill Asphalt	Wet mix timer not running.  The system double batched oil.
+		Closed	0.33
+1617	02/01/2007	Jerry	Temp	eABC	Holiday Rock Ashalt Oil Mod	They need an internal Setpoint off the Oil weigh Hopper. If the Scale is greater then this setpoint then switch off the Oil recycle Pump or Bring up an Output to shut down the Oil Pump. 
+Aslo we need to display an alarm on the batching Screen.
+I need to get a quote off to Tim?????		Closed	0.00
+1672	04/06/2007	Scott Franze	Temp	AUJS	Holliday Rock - error saving quotes (sporadic)	Error saving some quotes; it doesn't happen all of the time but is sporadic. Has something to do with inserting the already existing quote escalation prices.		Closed	1.00
+1674	04/06/2007	Boyd	Temp	eABC	Holliday Rock - Palmdale Zero Probe	Admix discharge not clearing.
+		Closed	0.25
+1766	06/04/2007	John Williams	Temp	AUJS	Holliday Rock - Credit Rebill	Requested information on how to setup credit and rebill prefix numbers.		Closed	0.35
+1785	06/06/2007	John Williams	Temp	AUJS	Holliday Rock - Ticket Proof	User indicates that prepared tickets from March were not displayed on the Ticket Proof report.		Closed	0.37

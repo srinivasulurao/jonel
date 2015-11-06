@@ -11,6 +11,7 @@ function debug($ArrayObject){
 ##	Companies: Edit Batching Maintenance
 ##
 // setup the title block
+$company_id = intval(dPgetParam($_GET, 'company_id', 0));
 $titleBlock = new CTitleBlock('Edit AU Maintenance', 'handshake.png', $m, "$m.$a");
 if ($canEdit) {
     $titleBlock->addCell();
@@ -24,18 +25,25 @@ $titleBlock->show();
 
 global $AppUI,$baseU;
 
-$company_id = intval(dPgetParam($_GET, 'company_id', 0));
+
 
 if($_POST['save_au']=="SAVE"):
-    $application_date=($_POST['accepted_date'])?date("m/d/Y",(strtotime($_POST['accepted_date'])-(3600*24*365))):$_POST['expiration_date'];
-    $report_accept_date=($_POST['accepted_date'])?date("Y-m-d H:i:s",strtotime($_POST['accepted_date'])):"0000-00-00 00:00:00";
+    $company_data=db_loadList("SELECT * FROM companies WHERE  company_id='$company_id'");
+    $result=$company_data[0];
+    //echo date("Y-m-d 00:00:00",strtotime($_REQUEST['accepted_date_hidden']));
+    //echo "<br>".$result['report_accept_date'];
+    //exit;
+    $application_date=(date("Y-m-d 00:00:00",strtotime($_REQUEST['accepted_date_hidden']))!=$result['report_accept_date'])?date("m/d/Y",(strtotime($_REQUEST['accepted_date_hidden'])-(3600*24*365))):date("m/d/Y",strtotime($_REQUEST['expiration_date_hidden']));
+    $report_accept_date=($_REQUEST['accepted_date_hidden'])?date("Y-m-d H:i:s",strtotime($_REQUEST['accepted_date_hidden'])):"0000-00-00 00:00:00";
 
     global $db;
 
-    //debug($_REQUEST);
+    // debug(date("d/M/Y",strtotime(trim($_REQUEST['accepted_date_hidden']))));
+    // debug(date("d/M/Y",strtotime($result['application_date'])));
 
     $sql="UPDATE companies SET application_date='$application_date', report_accept_date='$report_accept_date' WHERE company_id='$company_id'";
-    //$db->Execute($sql);
+    //exit($sql);
+    $db->Execute($sql);
     echo"<div style='margin:5px;background:lightgreen;padding:5px;border:1px solid green;border-radius:4px;'>&#x2714; Company details saved successfully !</div>";
 endif;
 
@@ -289,7 +297,7 @@ endif;
         <td><input class='text' readonly type="text" id="accepted_date" name="accepted_date" value="<?php echo ($result['report_accept_date']!="0000-00-00 00:00:00")?date("d/M/Y",strtotime($result['report_accept_date'])):""; ?>"><a href="javascript:void(0)" onclick="showDPCalender('accepted_date')"> <img src="./images/calendar.gif" name="img_expiredate2" width="24" height="12" alt="Calendar" border="0"></a></td>
       <input name='accepted_date_hidden' type='hidden' id='accepted_date_hidden' value="<?php echo ($result['report_accept_date']!="0000-00-00 00:00:00")?date("Ymd",strtotime($result['report_accept_date'])):date("Ymd",time()); ?>" >
       <input name='expiration_date_hidden' type='hidden' id='expiration_date_hidden' value="<?php echo date("Ymd",strtotime($result['application_date'])); ?>" >
-      <input name='accepted_date_hidden' type='hidden' id='contract_begin_date_hidden' value="<?php echo date("Ymd",time()); ?>" >
+      <input name='contract_begin_date_hidden' type='hidden' id='contract_begin_date_hidden' value="<?php echo date("Ymd",time()); ?>" >
     </tr>
     <tr><td colspan="4" style="text-align:center;"><input class="button" type="submit" name="save_au" value="SAVE">&nbsp;<input type="submit" name="save_au" value="GENERATE REPORT" class="button"></td></tr>
 </table>

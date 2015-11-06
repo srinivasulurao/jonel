@@ -62,7 +62,7 @@ function getUser($user_id){
 }
 
 function getCompanies(){
-	$sql="select company_id, company_name from companies";
+	$sql="select company_id, company_name from companies ORDER BY company_name ASC";
 	$result=db_loadlist($sql);
 	return $result;
 }
@@ -82,7 +82,7 @@ function getUsers(){
 <?php
 
 if($_POST['print']=="print"):
-
+    $l=10; // Page support Option.
 	$total_pages=ceil(sizeof(db_loadList($sql))/$l);
 	$pdfName="Help-Desk-Report.pdf";
 	$curl = curl_init();
@@ -95,7 +95,7 @@ if($_POST['print']=="print"):
 
 	for($u=1;$u<=$total_pages;$u++):
 		$dataArray['page'.$u]="<h1 style=\"text-align:center\">HELP DESK REPORT</h1>";
-		$dataArray['page'.$u].="<table style=\"width:100%;font-size:10px;text-align:center\" border=\"1\" cellpadding=\"2\"><tr style=\"color:steelblue;border:1px;font-weight:bold\"><th>ITEM ID</th><th>CREATED</th><th>REQ BY</th><th>USER</th><th width=\"12%\">APPLICATION</th><th>ISSUE</th><th>DETAIL</th><th>SYSTEM #</th><th>STATUS</th><th>TIME</th></tr>";
+		$dataArray['page'.$u].="<table style=\"width:100%;font-size:10px;text-align:center\" border=\"1\" cellpadding=\"2\"><tr style=\"color:steelblue;border:1px;font-weight:bold;\"><th width=\"30\">ITEM</th><th width=\"60\">CREATED</th><th width=\"70\">REQUEST BY</th><th width=\"70\">USER</th><th width=\"80\">APPLICATION</th><th width=\"150\">ISSUE</th><th  width=\"320\">DETAIL</th><th width=\"60\">SYSTEM #</th><th width=\"60\">STATUS</th><th width=\"40\">TIME</th></tr>";
 		$so=($u-1)*$l;
 		$pdfLister=db_loadList($sql."LIMIT $so,$l");
 		foreach($pdfLister as $pdfRow):
@@ -148,9 +148,9 @@ endforeach;
 ?>
 </select>
 <label>Create Date From: </label>
-<input name='date_from' type='text' value="<?php echo $_POST['date_from']; ?>" readonly='readonly'>
+<input name='date_from' type='text' value="<?php echo $_POST['date_from']; ?>" autocomplete='off'>
 <label>Create Date Till: </label>
-<input name='date_till' type='text' value="<?php echo $_POST['date_till']; ?>" readonly='readonly'>
+<input name='date_till' type='text' value="<?php echo $_POST['date_till']; ?>" autocomplete='off'>
 <label>System #: </label>
 <select name='item_department_id' id="item_department_id"><option value="">-SELECT-</option>
 <?php
